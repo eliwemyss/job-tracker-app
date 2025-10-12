@@ -344,34 +344,27 @@ export default function HomePage() {
         </div>
         <div className="flex items-center gap-2">
           {isGmailConnected && (
-            <div className="flex flex-col items-end w-full sm:w-auto">
-              <Button
-                onClick={handleProcessEmails}
-                disabled={isProcessing}
-                size="sm"
-                className="relative w-full sm:w-auto"
-              >
-                <RefreshCw
-                  className={`w-4 h-4 mr-2 ${
-                    isProcessing ? "animate-spin" : ""
-                  }`}
-                />
-                <span className="truncate">{getProcessingButtonText()}</span>
-              </Button>
+            <Button
+              onClick={handleProcessEmails}
+              disabled={isProcessing}
+              size="sm"
+              className="relative w-full sm:w-auto overflow-hidden disabled:opacity-100"
+            >
               {isProcessing && processingProgress && (
-                <div className="mt-2 w-full max-w-[200px]">
-                  <div className="flex justify-end text-xs text-muted-foreground mb-1">
-                    <span>{processingProgress.percentage}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out"
-                      style={{ width: `${processingProgress.percentage}%` }}
-                    />
-                  </div>
-                </div>
+                <div
+                  className="absolute inset-0 bg-blue-600/80 transition-all duration-300 ease-out"
+                  style={{ width: `${processingProgress.percentage}%` }}
+                />
               )}
-            </div>
+              <RefreshCw
+                className={`w-4 h-4 mr-2 relative z-10 ${
+                  isProcessing ? "animate-spin" : ""
+                }`}
+              />
+              <span className="truncate relative z-10">
+                {getProcessingButtonText()}
+              </span>
+            </Button>
           )}
           {!isGmailConnected && (
             <Button
